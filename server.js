@@ -15,7 +15,7 @@ app.use(express.static("public"));
 app.use(express.json());
 
 // connect to mongodb
-const client = new MongoClient(process.env.MONGO_URI);
+const client = new MongoClient("mongodb+srv://firas:rmxZQy1Ts2Qir4oM@cluster0.f36hm7w.mongodb.net/doublef?retryWrites=true&w=majority&tls=true");
 await client.connect();
 const db = client.db("doublef");
 const messages = db.collection("messages");
