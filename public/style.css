@@ -1,0 +1,382 @@
+/* public/style.css
+   Double F — mobile-first, blue theme, marry UI safe
+   Replace your existing style.css with this file
+*/
+
+/* ---------- THEME / VARIABLES ---------- */
+:root{
+  --bg-1: #e6f3ff;
+  --bg-2: #eaf6ff;
+  --card-bg: rgba(255,255,255,0.96);
+  --glass: rgba(255,255,255,0.22);
+  --muted: #6b7280;
+  --accent-1: #3ba9ff; /* lighter blue */
+  --accent-2: #0b76ff; /* deeper blue */
+  --accent-gradient: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+  --accent-shadow: rgba(11,118,255,0.14);
+  --success: #28c76f;
+  --danger: #ff6b6b;
+  --soft-shadow: 0 10px 30px rgba(16,24,40,0.08);
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --max-width: 520px;
+  --gap: 12px;
+  --glass-border: rgba(11,118,255,0.08);
+}
+
+/* ---------- BASE ---------- */
+* { box-sizing: border-box; }
+html,body { height: 100%; }
+body {
+  margin: 0;
+  font-family: "Poppins", Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background: radial-gradient(800px 600px at 10% 12%, rgba(59,169,255,0.06), transparent),
+              linear-gradient(180deg, var(--bg-1), var(--bg-2));
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  color: #0b1220;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* central card wrapper used by login/chat/truth pages */
+.container, .chat, .truth {
+  width: 100%;
+  max-width: var(--max-width);
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  padding: clamp(12px, 3.5vw, 20px);
+  box-shadow: var(--soft-shadow);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid var(--glass-border);
+}
+
+/* helpers */
+.row { display:flex; gap: var(--gap); align-items:center; }
+.col { display:flex; flex-direction:column; gap: 10px; }
+.small { font-size: 13px; color: var(--muted); }
+.hint { font-size:13px; color:var(--muted); text-align:center; }
+
+/* ---------- TYPOGRAPHY ---------- */
+h1, h2, h3 { margin: 0 0 6px 0; font-weight: 700; letter-spacing: -0.3px; }
+h2 { font-size: 19px; }
+p { margin: 0; line-height: 1.35; color: #091427; }
+
+/* ---------- INPUTS / BUTTONS ---------- */
+input[type="text"], input[type="password"], textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(8,12,20,0.05);
+  background: #ffffff;
+  font-size: 16px;
+  outline: none;
+  transition: box-shadow .14s, transform .06s;
+  resize: vertical;
+}
+input:focus, textarea:focus {
+  box-shadow: 0 8px 24px rgba(11,118,255,0.06);
+  transform: translateY(-1px);
+  border-color: var(--accent-2);
+}
+
+/* big primary button */
+.btn {
+  display: inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--accent-gradient);
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 10px 30px var(--accent-shadow);
+  transition: transform .12s ease, box-shadow .12s ease, opacity .12s;
+}
+.btn:active { transform: translateY(1px) scale(.997); box-shadow: 0 8px 18px rgba(11,118,255,0.10); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* secondary small button */
+.btn-ghost {
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: transparent;
+  border: 1px solid rgba(9,18,36,0.06);
+  color: #0b1220;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* action button (kiss/marry/kill) */
+.action-btn {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(9,18,36,0.06);
+  background: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  min-width: 74px;
+}
+.action-btn.kiss { color: #0b76ff; border-color: rgba(11,118,255,0.10); }
+.action-btn.marry { color: #0b76ff; border-color: rgba(11,118,255,0.10); }
+.action-btn.kill { color: var(--danger); border-color: rgba(255,107,107,0.08); }
+
+/* selected / active */
+.action-btn.selected {
+  color: white !important;
+  background: var(--accent-gradient);
+  border: none;
+  box-shadow: 0 8px 20px rgba(11,118,255,0.12);
+}
+
+/* disabled state */
+.action-btn[disabled], .action-btn.disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ---------- CHAT ---------- */
+/* layout */
+.chat { display:flex; flex-direction:column; gap: 12px; height: min(92vh, 840px); }
+#messages {
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+  padding: 10px;
+  overflow-y: auto;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(250,250,255,0.96));
+  min-height: 220px;
+  flex: 1 1 auto;
+}
+
+/* message wrapper */
+.message {
+  display:flex;
+  max-width: 86%;
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+/* bubble */
+.message .bubble {
+  padding: 10px 12px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(16,24,40,0.04);
+}
+
+/* my messages align right */
+.message.mine { align-self: flex-end; justify-content: flex-end; }
+.message.mine .bubble {
+  background: var(--accent-gradient);
+  color: white;
+  border-bottom-right-radius: 6px;
+}
+
+/* other people's messages align left */
+.message.theirs { align-self:flex-start; justify-content:flex-start; }
+.message.theirs .bubble {
+  background: linear-gradient(180deg,#ffffff,#fbfbfd);
+  border: 1px solid rgba(9,18,36,0.03);
+  color: #111;
+  border-bottom-left-radius: 6px;
+}
+
+/* meta row (name + time) */
+.message .meta {
+  display:flex;
+  gap:8px;
+  align-items:center;
+  margin-bottom:6px;
+  font-size:12px;
+  color:var(--muted);
+}
+.message .time { font-size:11px; color:var(--muted); }
+
+/* sticky input area */
+.chat-controls {
+  display:flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 6px;
+  width: 100%;
+}
+.chat-controls input#msg {
+  flex: 1 1 auto;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 15px;
+}
+.chat-controls button#send {
+  width: 84px;
+  flex: 0 0 84px;
+}
+
+/* ---------- MARRY UI (proposer & responder panels) ---------- */
+/* panels stack nicely on mobile and are scroll-safe */
+#marryProposer, #marryResponder {
+  display: none;
+  margin-top: 10px;
+  border-radius: 12px;
+  padding: 10px;
+  background: linear-gradient(180deg,#ffffff,#fbfdff);
+  border: 1px solid rgba(9,18,36,0.03);
+  box-shadow: 0 8px 24px rgba(9,18,36,0.04);
+}
+
+/* ensure inputs inside panel are comfy on mobile */
+#marryProposer input, #marryResponder textarea {
+  font-size: 15px;
+  padding: 10px;
+}
+
+/* name list container for responder */
+#responderNames {
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+  max-height: 260px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+/* each name card */
+.responder-card {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding: 10px;
+  border-radius: 10px;
+  background: linear-gradient(180deg,#fff,#fbfbfc);
+  border: 1px solid rgba(9,18,36,0.03);
+}
+
+/* row of action buttons */
+.responder-actions {
+  display:flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* explanation area */
+#responderExplanation {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(9,18,36,0.04);
+  padding: 10px;
+  resize: vertical;
+}
+
+/* small status text */
+#marryStatus, #marryResponderStatus { font-size:13px; color:var(--muted); margin-top:6px; }
+
+/* ---------- TRUTH PAGE ---------- */
+.truth { display:flex; flex-direction:column; gap: 12px; align-items:stretch; }
+#participants { font-size:13px; color:var(--muted); text-align:left; }
+#question {
+  background: linear-gradient(180deg,#fff,#fffefc);
+  padding: 14px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(16,24,40,0.05);
+  min-height: 64px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size: 17px;
+  font-weight:600;
+}
+#timer {
+  text-align:center;
+  font-weight:700;
+  color: #0b1220;
+  letter-spacing: .4px;
+}
+
+/* answer area */
+#answer {
+  min-height: 90px;
+  padding: 12px;
+  font-size: 15px;
+}
+
+/* answers reveal list */
+#answers { display:flex; flex-direction:column; gap:8px; }
+#answers p {
+  background: linear-gradient(180deg, #f7fbff, #f0f8ff);
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(11,118,255,0.06);
+  margin: 0;
+}
+
+/* ---------- NOTIFICATIONS / BADGES ---------- */
+.badge {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.9);
+  color:#0b1220;
+  box-shadow: 0 6px 14px rgba(16,24,40,0.04);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* ---------- UTILITIES ---------- */
+.center { display:flex; align-items:center; justify-content:center; }
+.mt { margin-top: 8px; }
+
+/* ---------- RESPONSIVE / MOBILE ---------- */
+@media (max-width: 520px) {
+  :root { --max-width: 520px; --gap: 10px; --radius-lg: 14px; }
+  .container, .chat, .truth {
+    padding: 12px;
+    border-radius: 14px;
+  }
+  h2 { font-size:18px; }
+  input, textarea { font-size:15px; padding: 12px; }
+  .chat-controls button#send { width: 74px; flex: 0 0 74px; padding: 10px; font-size: 14px; }
+
+  /* Marry UI adjustments */
+  #responderNames { max-height: 200px; }
+  .responder-actions { gap: 6px; }
+  .action-btn { min-width: 66px; font-size: 14px; padding: 8px 10px; }
+}
+
+/* smaller phones */
+@media (max-width: 360px) {
+  .chat-controls button#send { width: 68px; flex: 0 0 68px; }
+  .badge { font-size: 12px; padding: 5px 7px; }
+  .action-btn { min-width: 58px; padding: 7px 8px; }
+}
+
+/* ---------- MICRO-ANIMATIONS ---------- */
+@keyframes float-up {
+  from { transform: translateY(6px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.btn, .message .bubble, #question, .badge { animation: float-up .26s ease both; }
+
+/* ---------- ACCESSIBILITY ---------- */
+/* bigger tap targets and focus outlines (blue) */
+button:focus, input:focus, textarea:focus {
+  outline: 3px solid rgba(11,118,255,0.16);
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+
+/* ---------- END ---------- */

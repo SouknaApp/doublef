@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Double F — Chat</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="chat container">
+    <div class="row" style="justify-content:space-between;align-items:center;">
+      <h2>Double F — Chat</h2>
+      <div style="display:flex;gap:8px;">
+        <button id="truthBtn" class="btn-ghost">Truth</button>
+        <button id="marryBtn" class="btn">Marry</button>
+      </div>
+    </div>
+
+    <div id="messages" aria-live="polite"></div>
+
+    <div class="chat-controls">
+      <input id="msg" placeholder="Type message..." autocomplete="off">
+      <button id="send" class="btn">Send</button>
+    </div>
+
+    <!-- Marry proposer modal -->
+    <div id="marryProposer" style="display:none; margin-top:10px;">
+      <div class="small">Enter 3 names (people) for the other to Kiss/Marry/Kill</div>
+      <input id="name1" placeholder="Name 1">
+      <input id="name2" placeholder="Name 2">
+      <input id="name3" placeholder="Name 3">
+      <div style="display:flex;gap:8px;">
+        <button id="startMarryBtn" class="btn">Start Marry Round</button>
+        <button id="cancelMarryBtn" class="btn-ghost">Cancel</button>
+      </div>
+      <div id="marryStatus" class="small muted mt"></div>
+    </div>
+
+    <!-- Marry responder modal -->
+    <div id="marryResponder" style="display:none; margin-top:10px;">
+      <div class="small">Respond to <span id="marryFrom"></span>'s list:</div>
+      <div id="responderNames" style="display:flex;flex-direction:column;gap:8px;margin-top:8px;"></div>
+      <textarea id="responderExplanation" placeholder="(optional) explanation..." rows="3"></textarea>
+      <div style="display:flex;gap:8px;">
+        <button id="submitMarryResponseBtn" class="btn">Submit Response</button>
+        <button id="declineMarryBtn" class="btn-ghost">Decline</button>
+      </div>
+      <div id="marryResponderStatus" class="small muted mt"></div>
+    </div>
+
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="chat.js"></script>
+</body>
+</html>
